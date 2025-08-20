@@ -3,7 +3,6 @@ services:
   buzzer:
     build: .
     volumes:
-      - .:/usr/src/app
       - /usr/src/app/node_modules
     labels:
       - "traefik.http.routers.buzzer-http.entrypoints=web"

@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+  buzzer:
+    build: .
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    labels:
+      - "traefik.http.routers.buzzer-http.entrypoints=web"
+      - "traefik.http.routers.buzzer-http.rule=Host(`buzzer.glindhorst.de`)"
+      - "traefik.http.routers.buzzer-http.middlewares=change-https"
+      - "traefik.http.middlewares.buzzer-https.redirectscheme.scheme=https"
+      - "traefik.enable=true"
+      - "traefik.http.routers.buzzer.rule=Host(`buzzer.glindhorst.de`)"
+      - "traefik.http.routers.buzzer.entrypoints=websecure"
+      - "traefik.http.routers.buzzer.tls.certresolver=leresolver"
+      - "traefik.http.services.buzzer.loadbalancer.server.port=8080"
+    networks:
+    - traefik
+
+networks:
+  traefik:
+    external: true 

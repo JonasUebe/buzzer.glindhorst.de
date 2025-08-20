@@ -3,7 +3,8 @@ const joinButton = document.getElementById('join-game');
 const nameInput = document.getElementById('name');
 const codeInput = document.getElementById('game-code');
 
-const ws = new WebSocket(`ws://${window.location.host}`);
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const ws = new WebSocket(`${protocol}//${window.location.host}`);
 
 ws.onmessage = (event) => {
     const data = JSON.parse(event.data);

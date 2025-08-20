@@ -12,7 +12,8 @@ if (!playerName || !gameCode) {
     window.location.href = '/';
 }
 
-const ws = new WebSocket(`ws://${window.location.host}`);
+const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+const ws = new WebSocket(`${protocol}//${window.location.host}`);
 
 ws.onopen = () => {
     ws.send(JSON.stringify({ action: 'join', code: gameCode, name: playerName }));
